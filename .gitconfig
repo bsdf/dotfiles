@@ -1,0 +1,7 @@
+[user]
+	name = BEN ENGLISCH
+	email = EMAILBEN145@gmail.com
+[color]
+	ui = true
+[alias]
+	stat = status -s
