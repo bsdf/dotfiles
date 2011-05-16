@@ -3,7 +3,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(nxhtml-minor-mode-modes (quote (nxhtml-mode nxml-mode html-mode sgml-mode xml-mode php-mode css-mode javascript-mode java-mode image-mode dired-mode actionscript-mode))))
+)
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -14,9 +14,9 @@
 
 ; First things first...
 (setq inhibit-splash-screen t)
-;(scroll-bar-mode nil)
+(scroll-bar-mode nil)
 (menu-bar-mode nil)
-;(tool-bar-mode nil)
+(tool-bar-mode nil)
 (transient-mark-mode 1)
 
 (when
@@ -44,6 +44,8 @@
 (global-set-key "\C-c\C-t" 'beginning-of-buffer)
 (global-set-key "\C-c\C-g" 'goto-line)
 (global-set-key [C-return] 'newline-and-indent)
+
+(show-paren-mode)
 
 (require 'color-theme)
 (color-theme-initialize)
@@ -102,5 +104,3 @@
   (my-keys-minor-mode 0))
 
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
-
-(require 'python)
