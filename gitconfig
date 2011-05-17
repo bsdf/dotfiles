@@ -7,3 +7,4 @@
 	stat = status -s
 [core]
 	excludesfile = ~/.gitignore
+	editor = emacs
