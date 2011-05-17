@@ -5,3 +5,5 @@
 	ui = true
 [alias]
 	stat = status -s
+[core]
+	excludesfile = ~/.gitignore
