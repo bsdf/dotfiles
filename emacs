@@ -3,20 +3,20 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
-)
+ '(vc-follow-symlinks nil))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "outline" :family "Consolas")))))
+ '(default ((t (:stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 125 :width normal :foundry "outline" :family "Inconsolata")))))
 
 
 ; First things first...
 (setq inhibit-splash-screen t)
-(scroll-bar-mode nil)
+;(scroll-bar-mode nil)
 (menu-bar-mode nil)
-(tool-bar-mode nil)
+;(tool-bar-mode nil)
 (transient-mark-mode 1)
 
 (when
@@ -25,14 +25,28 @@
   (package-initialize))
 
 (setq load-path (cons "~/.emacs.d/" load-path))
-(setq load-path (cons "~/.emacs.d/color-theme" load-path))
-(setq load-path (cons "~/.emacs.d/coffee-mode" load-path))
+(setq load-path (cons "~/.emacs.d/colortheme" load-path))
+
+
+;(global-set-key [C-backspace] 'backward-kill-word)
+
+;; specific customizations for various terminals etc
+(when (eq window-system nil)
+  ; enable mouse
+  (xterm-mouse-mode)
+  ; iterm2 is set to send C-; as f6 cuz it sux
+  (global-set-key [f6] 'other-window)
+)
+
+(when (eq window-system 'ns)
+  ())
+
 
 (global-set-key "\C-x\C-h" 'help-command) ;; rebind help command
 (global-set-key "\C-h" 'backward-char)
 (global-set-key [?\C-\;] 'other-window)
 (global-set-key "\C-x\C-j" 'execute-extended-command) ;; M-x
-(global-set-key [C-backspace] 'backward-kill-word)
+;(global-set-key [C-backspace] 'backward-kill-word)
 (global-set-key "\C-w" 'forward-word)
 (global-set-key "\C-q" 'backward-word)
 (global-set-key "\C-x\C-k" 'kill-region)
