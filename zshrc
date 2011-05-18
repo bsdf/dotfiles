@@ -1,29 +1,18 @@
-# Path to your oh-my-zsh configuration.
-export ZSH=$HOME/.oh-my-zsh
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export NODE_PATH=/usr/local/lib/node
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-export ZSH_THEME="frisk"
+alias ls='ls -G'
+alias ll='ls -l'
 
-# Set to this to use case-sensitive completion
-# export CASE_SENSITIVE="true"
+autoload -U promptinit
+promptinit
+prompt walters
 
-# Comment this out to disable weekly auto-update checks
-# export DISABLE_AUTO_UPDATE="true"
+autoload -U compinit
+compinit
 
-# Uncomment following line if you want to disable colors in ls
-# export DISABLE_LS_COLORS="true"
+export MAVEN_OPTS=-Xmx512m
+export M2_HOME=/usr/share/maven
 
-# Uncomment following line if you want to disable autosetting terminal title.
-# export DISABLE_AUTO_TITLE="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-# Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
+bindkey '^[[3~' backward-delete-word

@@ -28,12 +28,19 @@
      (expand-file-name "~/.emacs.d/elpa/package.el"))
   (package-initialize))
 
+(setenv "PATH" (concat "/usr/local/bin"
+		       path-separator
+		       (getenv "PATH")))
+
 (setq load-path (cons "~/.emacs.d/" load-path))
 (setq load-path (cons "~/.emacs.d/colortheme" load-path))
 (setq load-path (cons "~/.emacs.d/coffee-mode" load-path))
 (setq load-path (cons "~/.emacs.d/egg" load-path))
 
-;(global-set-key [C-backspace] 'backward-kill-word)
+(let ((shellname "/usr/local/bin/zsh"))
+  (setenv "ESHELL" shellname)
+  (setenv "SHELL" shellname)
+  (setq shell-file-name shellname))
 
 ;; specific customizations for various terminals etc
 (when (eq window-system nil)
@@ -51,9 +58,10 @@
 (global-set-key "\C-h" 'backward-char)
 (global-set-key [?\C-\;] 'other-window)
 (global-set-key "\C-x\C-j" 'execute-extended-command) ;; M-x
-;(global-set-key [C-backspace] 'backward-kill-word)
+(global-set-key [C-backspace] 'backward-kill-word)
 (global-set-key "\C-w" 'forward-word)
-(global-set-key "\C-q" 'backward-word)
+;(global-set-key "\C-q" 'backward-word)
+(global-set-key "\C-q" 'quoted-insert)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-j" 'next-line)
 (global-set-key "\C-b" 'scroll-down)
@@ -71,33 +79,6 @@
 
 (require 'zenburn)
 (color-theme-zenburn)
-
-;; (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
-
-;; (defun my-goto-match-beginning ()
-;;  (when isearch-forward (goto-char isearch-other-end)))
-
-;; ;; I-search with initial contents
-;; (defvar isearch-initial-string nil)
-
-;; (defun isearch-set-initial-string ()
-;;  (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
-;;  (setq isearch-string isearch-initial-string)
-;;  (isearch-search-and-update))
-
-;; (defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
-;;  "Interactive search forward for the symbol at point."
-;;  (interactive "P\np")
-;;  (if regexp-p (isearch-forward regexp-p no-recursive-edit)
-;;    (let* ((end (progn (skip-syntax-forward "w_") (point)))
-;;           (begin (progn (skip-syntax-backward "w_") (point))))
-;;      (if (eq begin end)
-;;          (isearch-forward regexp-p no-recursive-edit)
-;;        (setq isearch-initial-string (buffer-substring begin end))
-;;        (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
-;;        (isearch-forward regexp-p no-recursive-edit)))))
-
-;; (global-set-key [?\C-\*] 'isearch-forward-at-point)
 
 (defun recenter-top ()
  (interactive)
