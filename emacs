@@ -4,7 +4,16 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(backup-directory-alist (quote (("." . "~/.emacs.d/backup"))))
- '(vc-follow-symlinks nil))
+ '(coffee-tab-width 4)
+ '(inhibit-startup-echo-area-message nil)
+ '(inhibit-startup-screen t)
+ '(initial-scratch-message "")
+ '(menu-bar-mode nil)
+ '(scroll-bar-mode nil)
+ '(tool-bar-mode nil)
+ '(transient-mark-mode t)
+ '(vc-follow-symlinks nil)
+ '(visible-bell t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -12,13 +21,7 @@
   ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 125 :width normal :foundry "outline" :family "Inconsolata")))))
 
-
-; First things first...
-(setq inhibit-splash-screen t)
-;(scroll-bar-mode nil)
-(menu-bar-mode nil)
-;(tool-bar-mode nil)
-(transient-mark-mode 1)
+(setq ring-bell-function 'ignore)
 
 (when
     (load
@@ -27,6 +30,8 @@
 
 (setq load-path (cons "~/.emacs.d/" load-path))
 (setq load-path (cons "~/.emacs.d/colortheme" load-path))
+(setq load-path (cons "~/.emacs.d/coffee-mode" load-path))
+(setq load-path (cons "~/.emacs.d/egg" load-path))
 
 ;(global-set-key [C-backspace] 'backward-kill-word)
 
@@ -67,32 +72,32 @@
 (require 'zenburn)
 (color-theme-zenburn)
 
-(add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+;; (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
 
-(defun my-goto-match-beginning ()
- (when isearch-forward (goto-char isearch-other-end)))
+;; (defun my-goto-match-beginning ()
+;;  (when isearch-forward (goto-char isearch-other-end)))
 
-;; I-search with initial contents
-(defvar isearch-initial-string nil)
+;; ;; I-search with initial contents
+;; (defvar isearch-initial-string nil)
 
-(defun isearch-set-initial-string ()
- (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
- (setq isearch-string isearch-initial-string)
- (isearch-search-and-update))
+;; (defun isearch-set-initial-string ()
+;;  (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
+;;  (setq isearch-string isearch-initial-string)
+;;  (isearch-search-and-update))
 
-(defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
- "Interactive search forward for the symbol at point."
- (interactive "P\np")
- (if regexp-p (isearch-forward regexp-p no-recursive-edit)
-   (let* ((end (progn (skip-syntax-forward "w_") (point)))
-          (begin (progn (skip-syntax-backward "w_") (point))))
-     (if (eq begin end)
-         (isearch-forward regexp-p no-recursive-edit)
-       (setq isearch-initial-string (buffer-substring begin end))
-       (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
-       (isearch-forward regexp-p no-recursive-edit)))))
+;; (defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
+;;  "Interactive search forward for the symbol at point."
+;;  (interactive "P\np")
+;;  (if regexp-p (isearch-forward regexp-p no-recursive-edit)
+;;    (let* ((end (progn (skip-syntax-forward "w_") (point)))
+;;           (begin (progn (skip-syntax-backward "w_") (point))))
+;;      (if (eq begin end)
+;;          (isearch-forward regexp-p no-recursive-edit)
+;;        (setq isearch-initial-string (buffer-substring begin end))
+;;        (add-hook 'isearch-mode-hook 'isearch-set-initial-string)
+;;        (isearch-forward regexp-p no-recursive-edit)))))
 
-(global-set-key [?\C-\*] 'isearch-forward-at-point)
+;; (global-set-key [?\C-\*] 'isearch-forward-at-point)
 
 (defun recenter-top ()
  (interactive)
@@ -118,3 +123,14 @@
   (my-keys-minor-mode 0))
 
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
+
+(require 'coffee-mode)
+
+; emacsclient stuff
+(server-start)
+(add-hook 'server-switch-hook
+	  (lambda ()
+	    (when (current-local-map)
+	      (use-local-map (copy-keymap (current-local-map))))
+	    (when server-buffer-clients
+	      (local-set-key (kbd "C-x k") 'server-edit))))
