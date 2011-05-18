@@ -5,6 +5,7 @@
 	ui = true
 [alias]
 	stat = status -s
+	prev = diff
 [core]
 	excludesfile = ~/.gitignore
 	editor = emacsclient -nw
