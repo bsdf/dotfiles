@@ -6,6 +6,7 @@
 [alias]
 	stat = status -s
 	prev = diff HEAD^
+	l = log --pretty=oneline
 [core]
 	excludesfile = ~/.gitignore
 	editor = emacsclient -nw
