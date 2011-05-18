@@ -8,6 +8,7 @@
 	prev = diff HEAD^
 	l = log --pretty=format:'%C(yellow)%h%Creset [%Cgreen%ad%Creset]%n%m %s%n' --date=relative
 	unstage = reset HEAD --
+	last = log -1 HEAD
 [core]
 	excludesfile = ~/.gitignore
 	editor = emacsclient -nw
